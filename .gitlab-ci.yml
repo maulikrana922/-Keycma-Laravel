@@ -1,0 +1,19 @@
+deploy:
+  stage: deploy
+  tags:
+   - laravel
+  variables:
+     build_path: "/var/www/html/builds/Pk-nkHvd/0/keycma1/keycma-laravel/"
+     Target_path: "/var/www/html/keycma-laravel/"
+  script:
+    
+    - echo "Deploy a keycma-laravel app"
+    - rsync -av   --exclude database.php --exclude '.env' $build_path/* $Target_path 
+    - cd $Target_path
+    - php74 /usr/bin/composer update
+    - rm -rf /var/www/html/builds/Pk-nkHvd
+    
+  
+  
+  only:
+    - dev
